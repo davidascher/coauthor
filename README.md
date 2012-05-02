@@ -49,6 +49,7 @@ Start etherpad, and copy the APIKEY from etherpad to the django dir:
 	cp APIKEY.txt ../../coauthor_site
 
 Start Django:
+
 	# make sure you have 1.3.1:
 	sudo pip install --upgrade django==1.3.1
 	cd ../../coauthor_site
