@@ -21,10 +21,12 @@ Start etherpad, and copy the APIKEY from etherpad to the django dir:
 
 Start Django:
 
+	cd ../../coauthor_site
 	python manage.py runserver &
 
 Install, configure and run the front-end proxy (in dev, I use node-http-proxy -- in production, configure your favorite solution (see [instructions](https://github.com/Pita/etherpad-lite/wiki/How-to-put-Etherpad-Lite-behind-a-reverse-Proxy)):
 
+	cd ..
 	npm install -g http-proxy
 	# edit http_proxy.config to point to the right ports for etherpad and django
 	http-proxy --config http_proxy.config --port 8081 # or whatever port you want
