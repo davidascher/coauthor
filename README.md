@@ -16,7 +16,7 @@ Then, configure etherpad:
 
 Start etherpad, and copy the APIKEY from etherpad to the django dir:
 
-	./run.sh &
+	bin/run.sh &
 	cp APIKEY.txt ../../coauthor_site
 
 Start Django:
