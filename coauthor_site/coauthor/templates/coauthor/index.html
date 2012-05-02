@@ -68,7 +68,7 @@ $(document).ready(function() {
 
     <ul id="padlist">
       {% for pad in user.pads.all() %}
-      <li><a href="/{{ pad.name }}">
+      <li><a href="/author/{{user.userprofile.slug}}/{{ pad.name }}">
             {{ pad.name }}</a>
       </li>
       {% endfor %}
