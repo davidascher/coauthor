@@ -1,6 +1,6 @@
 [submodule "vendor/django"]
 	path = vendor/django
 	url = git://github.com/django/django.git
-[submodule "etherpad-lite"]
-	path = etherpad-lite
+[submodule "vendor/etherpad-lite"]
+	path = vendor/etherpad-lite
 	url = git://github.com/Pita/etherpad-lite.git
