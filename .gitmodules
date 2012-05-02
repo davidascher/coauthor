@@ -3,4 +3,4 @@
 	url = git://github.com/django/django.git
 [submodule "vendor/etherpad-lite"]
 	path = vendor/etherpad-lite
-	url = git://github.com/Pita/etherpad-lite.git
+	url = git://github.com/davidascher/etherpad-lite
