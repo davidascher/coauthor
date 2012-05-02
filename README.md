@@ -57,7 +57,7 @@ Start Django:
 	python manage.py runserver &
 
 Install, configure and run the front-end proxy (in dev, I use
-node-http-proxy -- in production, configure your favorite solution
+`node-http-proxy` -- in production, configure your favorite front-end solution
 (see [instructions](https://github.com/Pita/etherpad-lite/wiki/How-to-put-Etherpad-Lite-behind-a-reverse-Proxy)):
 
 	cd ..
