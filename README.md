@@ -1,3 +1,32 @@
+Motivation
+------------
+
+This is an experiment in making a derivative of etherpad which is better suited to coauthoring of
+documents for publication to a broader community.  I've found that etherpad's UI, which is awesome 
+for small teams of 2-3, ends up 
+
+* chaotic when dealing with a dozen or more authors.
+* hard for _readers_ to process, primarily because the editing UI and the inevitable markup gets in the way of reading.
+
+Also, I've found that it's hard to keep track of what etherpads I've authored or read. 
+Team etherpads help, but not enough, especially because I have a different password for each team.
+
+To address these issues, I'm trying the following:
+
+* every user auths using Persona (there are no anonymous users)
+* every user gets a personal 'team-of-one', and (someday) will be able to manage groups as in 'old' etherpad
+* pads can be authored using the etherpad editing tools (bold, etc.), or using markdown
+* pads can be published -- those URLs are what you send to people you just want to read a pad, not coauthor it.
+
+
+Status
+-------
+
+* Persona login works
+* Currently all publishing assumes markdown markup
+* No real team management features yet
+* Lots more work to do, but the general framework of using Persona + etherpad-lite seems to work ok.
+
 Installation
 ------------
 
