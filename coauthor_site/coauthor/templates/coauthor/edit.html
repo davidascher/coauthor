@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Edit Pad: {{ name }}</title>
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/custom.css" rel="stylesheet">
+<style>
+
+iframe#etherpad {
+	float: right;
+    border: none;
+}
+
+/*
+	Basic layout courtesy of InkNoise's very nifty Layout-o-matic:
+	http://www.inknoise.com/experimental/layoutomatic.php
+*/
+
+#sidebar {
+	overflow: auto;
+	display: inline-block;
+	width: 250px;
+	padding: 25px;
+	margin: 0;
+	margin-right: 10px;
+	background-color: transparent;
+}
+#etherpad {
+	position: absolute;
+	left: 300px;
+	height: 100%;
+}
+</style>
+
+<script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+<body>	
+	<div id="sidebar">
+<h1>This is CoAuthor</h1>
+
+<p>This tool uses the amazing etherpad for collaborative editing, but also publishes your documents so that they're <em>pretty</em> and easier for your readers to read.</p>
+<p>
+Don't use the bold/italic buttons (they won't work).  Instead, use the markdown syntax described below, which also lets you do useful things like headings or links.</em>.</p>
+
+<a class="btn btn-success" target="null" href="{{ render_pad_url }}">Open Published Version</a>
+
+<hr/>
+
+<h2>Syntax Cheatsheet:</h2>
+
+<h3>Headers</h3>
+
+<p>Setext-style:</p>
+
+<pre><code>Header 1
+========
+
+Header 2
+--------
+</code></pre>
+
+<p>atx-style (closing #'s are optional):</p>
+
+<pre><code># Header 1 #
+
+## Header 2 ##
+
+###### Header 6
+</code></pre>
+
+<h3>Lists</h3>
+
+<p>Ordered, without paragraphs:</p>
+
+<pre><code>1.  Foo
+2.  Bar
+</code></pre>
+
+<p>Unordered, with paragraphs:</p>
+
+<pre><code>*   A list item.
+
+    With multiple paragraphs.
+
+*   Bar
+</code></pre>
+
+<p>You can nest them:</p>
+
+<pre><code>*   Cucumber
+    * japanese
+*   Tomato
+    1.  red
+    2.  green
+        * fried
+    3. heirloom
+*   Zucchini
+</code></pre>
+
+<h3>Phrase Emphasis</h3>
+
+<pre><code>*italic*   **bold**
+_italic_   __bold__
+</code></pre>
+
+<h3>Links</h3>
+
+<p>Inline:</p>
+
+<pre><code>An [example](http://url.com/ "Title")
+</code></pre>
+
+<p>Reference-style labels (titles are optional):</p>
+
+<pre><code>An [example][id]. Then, anywhere
+else in the doc, define the link:
+
+  [id]: http://example.com/  "Title"
+</code></pre>
+
+<h3>Images</h3>
+
+<p>Inline (titles are optional):</p>
+
+<pre><code>![alt text](/path/img.jpg "Title")
+</code></pre>
+
+<p>Reference-style:</p>
+
+<pre><code>![alt text][id]
+
+[id]: /url/to/img.jpg "Title"
+</code></pre>
+
+
+<h3>Blockquotes</h3>
+
+<pre><code>&gt; Email-style angle brackets
+&gt; are used for blockquotes.
+
+&gt; &gt; And, they can be nested.
+
+&gt; #### Headers in blockquotes
+&gt; 
+&gt; * You can quote a list.
+&gt; * Etc.
+</code></pre>
+
+<h3>Code Spans</h3>
+
+<pre><code>`&lt;code&gt;` spans are delimited
+by backticks.
+
+You can include literal backticks
+like `` `this` ``.
+</code></pre>
+
+<h3>Preformatted Code Blocks</h3>
+
+<p>Indent every line of a code block by at least 4 spaces or 1 tab.</p>
+
+<pre><code>This is a normal paragraph.
+
+    This is a preformatted
+    code block.
+</code></pre>
+
+<h3>Horizontal Rules</h3>
+
+<p>Three or more dashes or asterisks:</p>
+
+<pre><code>---
+
+* * *
+
+- - - - 
+</code></pre>
+
+<h3>Manual Line Breaks</h3>
+
+<p>End a line with two or more spaces:</p>
+
+<pre><code>Roses are red,   
+Violets are blue.
+</code></pre>
+	</div> <!-- sidebar -->
+	<iframe id="etherpad" width="900" height="100%"></iframe>
+
+
+</body>
+
+<script>
+function resize() {
+    $("#etherpad").height($(window).height());
+    $("#sidebar").height($(window).height());
+}
+
+$(window).resize(resize);
+$(window).ready(resize);
+
+function createCookie(name, value, days, path)
+{
+  if (days)
+  {
+    var date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    var expires = "; expires=" + date.toGMTString();
+  }
+  else var expires = "";
+
+  if(!path)
+    path = "/";
+
+  document.cookie = name + "=" + value + expires + "; path=" + path;
+}
+
+
+// docCookies.setItem("sessionID", "{{sessionID}}");
+createCookie("sessionID", "{{sessionID}}", 10, "/");
+window.setTimeout(function () {
+	document.getElementById("etherpad").setAttribute("src", "{{ etherpad_url}}");
+}, 1000)
+</script>

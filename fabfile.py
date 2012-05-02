@@ -3,12 +3,12 @@ from fabric.api import task, env
 from fabric.operations import run
 from fabric.contrib.files import exists
 
-PROJ_ROOT = '/var/htmlpad.org'
-REPO_URL = "git://github.com/hackasaurus/htmlpad.git"
+PROJ_ROOT = '/var/coauthor.org'
+REPO_URL = "git://github.com/davidascher/coauthor.git"
 DJANGO_REPO = "/var/repositories/django"
 
 def run_manage_cmd(cmd):
-    with cd('%s/htmlpad_dot_org' % PROJ_ROOT):
+    with cd('%s/coathor_site' % PROJ_ROOT):
         run('python manage.py %s' % cmd)
 
 @task
@@ -32,4 +32,4 @@ def deploy():
         clone()
     run_manage_cmd('collectstatic --noinput')
     run_manage_cmd('test')
-    run('touch %s/wsgi/htmlpad.wsgi' % PROJ_ROOT)
+    run('touch %s/wsgi/coauthor.wsgi' % PROJ_ROOT)

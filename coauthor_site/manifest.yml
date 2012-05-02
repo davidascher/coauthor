@@ -1,0 +1,13 @@
+--- 
+applications: 
+  .: 
+    name: coauthor
+    instances: 1
+    framework: 
+      name: django
+      info: 
+        exec: 
+        description: Python Django Application
+        mem: 128M
+    url: ${name}.${target-base}
+    mem: 128M

@@ -1,0 +1,182 @@
+/*@import url(http://fonts.googleapis.com/css?family=Mystery+Quest);*/
+/*@import url(http://fonts.googleapis.com/css?family=Glass+Antiqua);*/
+@import url(http://fonts.googleapis.com/css?family=Amatic+SC:700);
+
+
+.editlink {
+    float: right;
+    display: block;
+    padding-top: 1em;
+    padding-right: 2em;
+    position: relative;
+    font-size: 15px;
+    overflow: hidden;
+    z-index: 999;
+}
+
+
+h1:after,
+h2:after,
+h3:after,
+h4:after,
+h5:after,
+h6:after {
+    content: "\00A7"attr(id);
+    color: white;
+    padding-left: 1em;
+    font-size: 60%;
+}
+
+h1:hover:after,
+h2:hover:after,
+h3:hover:after,
+h4:hover:after,
+h5:hover:after,
+h6:hover:after {
+    content: "\00A7"attr(id);
+    color: darkred;
+    padding-left: 1em;
+    font-size: 60%;
+}
+</style>
+
+.loveit {
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'PT Sans Narrow', sans-serif;
+}
+
+.navbar .brand {
+	font-size: 28px !important;
+}
+.whimsical {
+	font-family: 'Amatic SC', cursive;
+	/*font-weight: normal !important;*/
+	font-weight: 700 !important;
+}
+
+.signature {
+	/*text-align: right;*/
+}
+.labels,.date {
+	float: right;
+	padding-bottom: 1em;
+}
+
+.date {
+	clear: both;
+}
+
+.label {
+	font-family: 'Helvetica Neue', sans-serif;
+	text-shadow: none;
+	font-weight: normal;
+}
+
+.spacer {
+	padding-top: 1em;
+}
+.why {
+  color: white;
+  padding: 8px 20px 12px;
+  float: right;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.why:hover {
+	color: white;
+}
+header h1{
+	padding-top: .2em;
+	font-size: 60px;
+	line-height: 1.2em;
+	padding-bottom: .2em;
+}
+
+h1 {
+	padding-top: .2em;
+}
+h2 {
+	line-height: 1.1em;
+	padding-bottom: .2em;
+}
+.posttitle {
+	padding-bottom: 1em;
+}
+
+.project {
+	padding-bottom: .5em;
+/*	border: 2px solid grey;
+	-moz-box-sizing: border-box;
+*/}
+
+.more {
+	text-align: right;
+}
+
+.favicon{
+	height: 16px;
+	max-width: 16px;
+	background-image:url('/assets/img/icons-sprite.png');
+	background-repeat:no-repeat;
+	background-position:left 5px;
+	padding:0px 0 3px 21px!important;
+}
+
+.rss{
+	background-position:-118px -48px;
+}
+
+.pdf{
+	background-position:-202px -130px;
+}
+
+.default{
+	background-position:-182px -109px;
+}
+
+.github{
+	background-position:-242px -170px;
+}
+
+.flickr{
+	background-position:-222px -150px;
+}
+
+.facebook{
+	background-position:-162px -90px;
+}
+
+.twitter{
+	background-position:-142px -70px;
+}
+
+.blogger{
+	background-position:-262px -190px;
+}
+
+.plus{
+	background-position:-282px -210px;
+}
+
+.tumblr{
+	background-position:-302px -230px;
+}
+
+.vimeo{
+	background-position:-322px -250px;
+}
+
+.youtube{
+	background-position:-342px -270px;
+}
+
+.addons{
+	background-position:-362px -290px;
+}

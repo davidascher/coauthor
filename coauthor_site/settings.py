@@ -1,6 +1,6 @@
-# Django settings for htmlpad_dot_org project.
+# Django settings for coauthor project.
 
-import os
+import os, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 path = lambda *a: os.path.join(ROOT, *a)
@@ -14,16 +14,31 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+AUTH_PROFILE_MODULE = 'coauthor.UserProfile'
+ETHERPAD_API_KEY = open("APIKEY.txt").read().strip()
+ETHERPAD_HOST = "http://localhost:9001"
+SESSION_COOKIE_NAME = 'django_sessionid' # to avoid conflicting w/ etherpad sessionID
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'NAME': 'default',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.media',
+    'django.core.context_processors.request',
+    'django.core.context_processors.csrf',
+    'django.contrib.messages.context_processors.messages',
+    'django_browserid.context_processors.browserid_form',
+    # ...
+)
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -61,7 +76,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = path('..', 'collected-static')
+STATIC_ROOT = path('collected-static')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -77,6 +92,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    path('coauthor', 'static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -88,20 +104,27 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '^p))j+42-j!47z5y_vpw(5^hof4l+b=*$ncpp5q02%)u4bstl9'
+SECRET_KEY = 'aa02%)u4bstl9'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
+    'jingo.Loader',
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
+    # 'commons.middleware.LocaleURLMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'htmlpad_dot_org.urls'
+JINGO_EXCLUDE_APPS = ('admin',)
+
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -109,11 +132,23 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+AUTHENTICATION_BACKENDS = (
+    # ...
+    'django_browserid.auth.BrowserIDBackend',
+    'django.contrib.auth.backends.ModelBackend' # needed?? XXX
+    # ...
+)
+
 INSTALLED_APPS = (
     'django.contrib.staticfiles',
-    'htmlpad'
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.messages',
+    'django_browserid', # after auth
+    'django.contrib.sessions',
+    'coauthor',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -141,6 +176,15 @@ LOGGING = {
     }
 }
 
+BROWSERID_VERIFICATION_URL = 'https://browserid.org/verify'
+BROWSERID_CREATE_USER = True
+LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL_FAILURE = '/'
+
+# Note: No trailing slash
+SITE_URL = 'http://localhost:8081'  # for browserid
+#SITE_URL = 'http://localhost:8000'  # for browserid
+
 HTMLPAD_ROOT = ''
 ETHERPAD_PROTOCOL = 'https'
-ETHERPAD_HOST = 'etherpad.mozilla.org'
+# ETHERPAD_HOST = 'etherpad.mozilla.org'

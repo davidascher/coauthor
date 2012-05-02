@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>Welcome to {{ request.META.HTTP_HOST }}!</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <style>
+    #instructions {
+        display: none;
+    }
+    #fail {
+        display: none;
+        color: firebrick;
+    }
+    input#name {
+        border: 1px dotted gray;
+        font-family: Helvetica, sans-serif;
+        font-size: 14pt;
+    }
+    input:focus {
+        outline-width: 0;
+    }
+    </style>
+    <script src="https://browserid.org/include.js" type="text/javascript"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript">
+$(document).ready(function() {
+    $('#browserid').bind('click', function(e) {
+        e.preventDefault();
+        navigator.id.getVerifiedEmail(function(assertion) {
+            if (assertion) {
+                var $e = $('#id_assertion');
+                $e.val(assertion.toString());
+                $e.parent().submit();
+            }
+        });
+    });
+});    </script>
+</head>
+<body>
+  <div class="container">
+
+
+
+    <h1>Welcome to CoAuthor </h1>
+    <p>(hosted at {{ request.META.HTTP_HOST }}, mirroring the etherpad at {{ etherpad }})
+                    <p>URL is: {{ url('browserid_verify') }}</P>
+
+    <p>CoAuthor combines the quick co-editing capabilities of etherpad, with a publication mode, so that you can share beautiful published web pages with <em>readers</em>.</p>
+
+
+   {% if not user.is_authenticated() -%}
+    <form method="POST" action="{{ url('browserid_verify') }}" id="browserid_form">
+        {{ csrf()|safe }}
+        <input type="hidden" name="assertion" id="id_assertion" />
+        <a id="browserid" class="login" href="#">sign in with your Persona ID</a>
+    </form>
+    {% else -%}
+    <p>user is authed, whaddayanow?</p>
+    <a class="account" href="{{ url('coauthor-signout') }}">{{ _('Sign Out') }}</a>
+    <a class="btn">create new pad</a>
+
+    <ul id="padlist">
+      {% for pad in user.pads.all() %}
+      <li><a href="/{{ pad.name }}">
+            {{ pad.name }}</a>
+      </li>
+      {% endfor %}
+
+    </ul>
+
+
+    <p>Just start typing the name of a page you'd like to create below.</p>
+    <input autofocus type="text" id="name"></input>
+    <div id="instructions">
+        <p>Create and edit the pad at <a class='btn btn-info' id="etherpad" href="" target="edit"></a> to build and view your document. (it's possible someone already has a page with that name!)
+    </div>
+    <div id="fail">
+        <p>Sorry, page names can only contain upper and lowercase letters, hyphens, and numbers.</p>
+    </div>
+
+    {% endif -%}
+
+    </div>
+
+   {% if user.is_authenticated() -%}
+<script>
+$(window).ready(function() {
+    $("#name").val("");
+    $("#name").keyup(function() {
+        var pad = $(this).val();
+        if (pad.length == 0) {
+          $("#instructions").slideUp();
+          $("#fail").slideUp();
+        } else {
+          if (pad.match(/^[A-Za-z\-0-9]+$/)) {
+            //var path = "/{{ HTMLPAD_ROOT }}" + pad + "/edit";
+            var path = "{{ edit_pad_template }}".replace("{{ ep_arg }}", pad);
+            var etherpadURL = "http://{{ request.META.HTTP_HOST }}/author/" + "{{ user.userprofile.slug}}/" + path;
+            $("#instructions #etherpad").attr("href",  etherpadURL).attr(
+                'target', '_self').text(etherpadURL);
+            $("#fail").slideUp();
+            $("#instructions").fadeIn();
+          } else {
+            $("#instructions").fadeOut();
+            $("#fail").slideDown();
+          }
+        }
+    });
+});
+</script>
+    {% endif -%}
+</body>
+</html>
